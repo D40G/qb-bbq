@@ -1,5 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = {}
+local IsCookingFood = false
 
 
 --BBQ Menu
@@ -217,44 +218,65 @@ end)
 RegisterNetEvent('qb-bbq:client:CookBurger', function() 
     QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasitem)
         if hasitem then
-            TriggerEvent('animations:client:EmoteCommandStart', {"bbq"})
-            QBCore.Functions.Progressbar("cook", "Cooking Burger", 10000, false, true, {
+            IsCookingFood = true
+            QBCore.Functions.Progressbar('cook', 'Cooking Burger . . .', 10000, false, true, {
                 disableMovement = false,
                 disableCarMovement = false,
                 disableMouse = false,
                 disableCombat = false,
                 disableInventory = true,
-            }, {}, {}, {}, function()
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+            }, {
+                animDict = 'amb@prop_human_bbq@male@idle_a',
+                anim = 'idle_b',
+                flags = 8,
+            }, {
+                model = 'prop_fish_slice_01',
+                bone = 28422,
+                coords = { x = -0.005, y = 0.00, z = 0.00 },
+                rotation = { x = 350.0, y = 320.0, z = 0.0 },
+            }, {}, function()
                 TriggerServerEvent('qb-bbq:server:CookBurger')
-                QBCore.Functions.Notify("You Cooked a Burger!", "success", "20") 
+                QBCore.Functions.Notify("You Cooked a Burger!", "success", "20")
+                IsCookingFood = false 
             end, function() -- Cancel
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
                 QBCore.Functions.Notify("Canceled..", "error")
+                IsCookingFood = false
             end)
         else
             QBCore.Functions.Notify("You need some uncooked burgers!", "error")
         end
-    end, "b-uc-burger")  
+    end, "b-uc-burger")
 end)
+
 
 RegisterNetEvent('qb-bbq:client:CookChicken', function() 
     QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasitem)
         if hasitem then
-            TriggerEvent('animations:client:EmoteCommandStart', {"bbq"})
+            IsCookingFood = true
             QBCore.Functions.Progressbar("cook", "Cooking Chicken Burger", 10000, false, true, {
                 disableMovement = false,
                 disableCarMovement = false,
                 disableMouse = false,
                 disableCombat = false,
                 disableInventory = true,
-            }, {}, {}, {}, function()
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+            }, {
+                animDict = 'amb@prop_human_bbq@male@idle_a',
+                anim = 'idle_b',
+                flags = 8,
+            }, {
+                model = 'prop_fish_slice_01',
+                bone = 28422,
+                coords = { x = -0.005, y = 0.00, z = 0.00 },
+                rotation = { x = 350.0, y = 320.0, z = 0.0 },
+            }, {}, function()
                 TriggerServerEvent('qb-bbq:server:CookChicken')
-                QBCore.Functions.Notify("You Cooked a Chicken Burger!", "success", "20") 
+                QBCore.Functions.Notify("You Cooked a Chicken Burger!", "success", "20")
+                IsCookingFood = false  
             end, function() -- Cancel
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
                 QBCore.Functions.Notify("Canceled..", "error")
+                IsCookingFood = false
             end)
         else
             QBCore.Functions.Notify("You need an uncooked Chicken burger!", "error")
@@ -265,20 +287,30 @@ end)
 RegisterNetEvent('qb-bbq:client:CookHotDog', function() 
     QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasitem)
         if hasitem then
-            TriggerEvent('animations:client:EmoteCommandStart', {"bbq"})
+            IsCookingFood = true
             QBCore.Functions.Progressbar("cook", "Cooking Hot Dog", 7000, false, true, {
                 disableMovement = false,
                 disableCarMovement = false,
                 disableMouse = false,
                 disableCombat = false,
                 disableInventory = true,
-            }, {}, {}, {}, function()
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+            }, {
+                animDict = 'amb@prop_human_bbq@male@idle_a',
+                anim = 'idle_b',
+                flags = 8,
+            }, {
+                model = 'prop_fish_slice_01',
+                bone = 28422,
+                coords = { x = -0.005, y = 0.00, z = 0.00 },
+                rotation = { x = 350.0, y = 320.0, z = 0.0 },
+            }, {}, function()
                 TriggerServerEvent('qb-bbq:server:CookHotDog')
-                QBCore.Functions.Notify("You Cooked a HotDog!", "success", "20") 
+                QBCore.Functions.Notify("You Cooked a HotDog!", "success", "20")
+                IsCookingFood = false   
             end, function() -- Cancel
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
                 QBCore.Functions.Notify("Canceled..", "error")
+                IsCookingFood = false  
             end)
         else
             QBCore.Functions.Notify("You need some uncooked hotdog!", "error")
@@ -289,20 +321,30 @@ end)
 RegisterNetEvent('qb-bbq:client:CookRibs', function() 
     QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasitem)
         if hasitem then
-            TriggerEvent('animations:client:EmoteCommandStart', {"bbq"})
+            IsCookingFood = true
             QBCore.Functions.Progressbar("cook", "Cooking Ribs", 10000, false, true, {
                 disableMovement = false,
                 disableCarMovement = false,
                 disableMouse = false,
                 disableCombat = false,
                 disableInventory = true,
-            }, {}, {}, {}, function()
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+            }, {
+                animDict = 'amb@prop_human_bbq@male@idle_a',
+                anim = 'idle_b',
+                flags = 8,
+            }, {
+                model = 'prop_fish_slice_01',
+                bone = 28422,
+                coords = { x = -0.005, y = 0.00, z = 0.00 },
+                rotation = { x = 350.0, y = 320.0, z = 0.0 },
+            }, {}, function()
                 TriggerServerEvent('qb-bbq:server:CookRibs')
-                QBCore.Functions.Notify("You Cooked Spare Ribs!", "success", "20") 
+                QBCore.Functions.Notify("You Cooked Spare Ribs!", "success", "20")
+                IsCookingFood = false 
             end, function() -- Cancel
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
                 QBCore.Functions.Notify("Canceled..", "error")
+                IsCookingFood = false
             end)
         else
             QBCore.Functions.Notify("You need uncooked ribs!", "error")
@@ -313,20 +355,30 @@ end)
 RegisterNetEvent('qb-bbq:client:CookBrisket', function() 
     QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasitem)
         if hasitem then
-            TriggerEvent('animations:client:EmoteCommandStart', {"bbq"})
+            IsCookingFood = true
             QBCore.Functions.Progressbar("cook", "Cooking Brisket", 20000, false, true, {
                 disableMovement = false,
                 disableCarMovement = false,
                 disableMouse = false,
                 disableCombat = false,
                 disableInventory = true,
-            }, {}, {}, {}, function()
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+            }, {
+                animDict = 'amb@prop_human_bbq@male@idle_a',
+                anim = 'idle_b',
+                flags = 8,
+            }, {
+                model = 'prop_fish_slice_01',
+                bone = 28422,
+                coords = { x = -0.005, y = 0.00, z = 0.00 },
+                rotation = { x = 350.0, y = 320.0, z = 0.0 },
+            }, {}, function()
                 TriggerServerEvent('qb-bbq:server:CookBrisket')
-                QBCore.Functions.Notify("You Cooked Brisket!", "success", "20") 
+                QBCore.Functions.Notify("You Cooked Brisket!", "success", "20")
+                IsCookingFood = false 
             end, function() -- Cancel
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
                 QBCore.Functions.Notify("Canceled..", "error")
+                IsCookingFood = false 
             end)
         else
             QBCore.Functions.Notify("You need uncooked brisket!", "error")
@@ -337,20 +389,30 @@ end)
 RegisterNetEvent('qb-bbq:client:CookJacket', function() 
     QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasitem)
         if hasitem then
-            TriggerEvent('animations:client:EmoteCommandStart', {"bbq"})
+            IsCookingFood = true
             QBCore.Functions.Progressbar("cook", "Cooking Jacket Potato", 10000, false, true, {
                 disableMovement = false,
                 disableCarMovement = false,
                 disableMouse = false,
                 disableCombat = false,
                 disableInventory = true,
-            }, {}, {}, {}, function()
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+            }, {
+                animDict = 'amb@prop_human_bbq@male@idle_a',
+                anim = 'idle_b',
+                flags = 8,
+            }, {
+                model = 'prop_fish_slice_01',
+                bone = 28422,
+                coords = { x = -0.005, y = 0.00, z = 0.00 },
+                rotation = { x = 350.0, y = 320.0, z = 0.0 },
+            }, {}, function()
                 TriggerServerEvent('qb-bbq:server:CookJacket')
-                QBCore.Functions.Notify("You Cooked a Jacket!", "success", "20") 
+                QBCore.Functions.Notify("You Cooked a Jacket!", "success", "20")
+                IsCookingFood = false 
             end, function() -- Cancel
-                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
                 QBCore.Functions.Notify("Canceled..", "error")
+                IsCookingFood = false
             end)
         else
             QBCore.Functions.Notify("You need an uncooked Jacket!", "error")
