@@ -26,7 +26,7 @@ qb-shops - https://github.com/qbcore-framework/qb-shops
 
 ## Known Issues 
 ```
-prop sometimes stays in hand after emote is done. i believe this is an issue with dpemotes
+FIXED -- prop sometimes stays in hand after emote is done. i believe this is an issue with dpemotes
 but i will look into this more
 ```
 
@@ -34,6 +34,7 @@ but i will look into this more
 
 - BerkieB for his qb-target.
 - Breadlord as this was his original idea and he gave me permission to do it instead. 
+- Jason. for giving me some code to delete prop after use - Top Guy
 
 ## Insert into @qb-core/shared/items.lua 
 
