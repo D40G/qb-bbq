@@ -48,4 +48,75 @@ RegisterNetEvent('qb-bbq:server:CookJacket', function()
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-jacket'], "add")
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-uc-jacket'], "removed")
 end)
+--buying stuff--
+RegisterNetEvent('qb-bbq:server:BuyBurger', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local quantity = Config.BuyBurgerAmount
+    local item = 'b-uc-burger'
+    local price = Config.BuyBurgerCost
 
+    Player.Functions.RemoveMoney('cash', price)
+    Player.Functions.AddItem(item, quantity)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add")
+end)
+
+RegisterNetEvent('qb-bbq:server:BuyChicken', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local quantity = Config.BuyChickenAmount
+    local item = 'b-uc-chicken'
+    local price = Config.BuyChickenCost
+
+    Player.Functions.RemoveMoney('cash', price)
+    Player.Functions.AddItem(item, quantity)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add")
+end)
+
+RegisterNetEvent('qb-bbq:server:BuyHotDog', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local quantity = Config.BuyHotDogAmount
+    local item = 'b-uc-hotdog'
+    local price = Config.BuyHotDogCost
+
+    Player.Functions.RemoveMoney('cash', price)
+    Player.Functions.AddItem(item, quantity)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add")
+end)
+
+RegisterNetEvent('qb-bbq:server:BuyRibs', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local quantity = Config.BuyRibsAmount
+    local item = 'b-uc-ribs'
+    local price = Config.BuyRibsCost
+
+    Player.Functions.RemoveMoney('cash', price)
+    Player.Functions.AddItem(item, quantity)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add")
+end)
+
+RegisterNetEvent('qb-bbq:server:BuyBrisket', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local quantity = Config.BuyBrisketAmount
+    local item = 'b-uc-brisket'
+    local price = Config.BuyBrisketCost
+
+    Player.Functions.RemoveMoney('cash', price)
+    Player.Functions.AddItem(item, quantity)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add")
+end)
+
+RegisterNetEvent('qb-bbq:server:BuyJacket', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local quantity = Config.BuyJacketAmount
+    local item = 'b-uc-jacket'
+    local price = Config.BuyJacketCost
+
+    Player.Functions.RemoveMoney('cash', price)
+    Player.Functions.AddItem(item, quantity)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[item], "add")
+end)
