@@ -9,7 +9,7 @@ RegisterNetEvent('qb-bbq:BBQMenu', function(data)
         {
             
             header = "| Cook |",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
+            isMenuHeader = true, 
         },
         {
             
@@ -62,34 +62,11 @@ RegisterNetEvent('qb-bbq:BBQMenu', function(data)
         {
             id = 7,
             header = "Close (ESC)",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
+            isMenuHeader = true, 
         },
     })
 end)
---conversation with buy ped
---[[RegisterNetEvent('qb-bbq:ShopMenu', function(data)
-    exports['qb-menu']:openMenu({
-        {
-            
-            header = "| Billy |",
-            txt = "Hey Man hows it going?"
-            isMenuHeader = true, -- Set to true to make a nonclickable title
-        },
-        {
-            
-            header = "• Buy Items",
-            txt = "Browse Goods",
-            params = {
-                event = "qb-bbq:shop"
-            }
-        },
-        {
-            id = 7,
-            header = "Close (ESC)",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
-        },
-    })
-end)]]
+
 
 RegisterNetEvent('qb-bbq:StartConvo', function(data)
     exports['qb-menu']:openMenu({
@@ -97,7 +74,7 @@ RegisterNetEvent('qb-bbq:StartConvo', function(data)
             
             header = "| Billy |",
             txt = "Hey Man hows it going?",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
+            isMenuHeader = true, 
         },
         {
             
@@ -115,11 +92,6 @@ RegisterNetEvent('qb-bbq:StartConvo', function(data)
                 event = "qb-bbq:FeelingBad"
             }
         },
-       --[[ {
-            id = 7,
-            header = "Close (ESC)",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
-        },]]
     })
 end)
 
@@ -128,7 +100,7 @@ RegisterNetEvent('qb-bbq:FeelingGood', function(data)
         {
             
             header = "| That is Great to hear Friend, you looking to buy some fresh BBQ products? |",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
+            isMenuHeader = true, 
         },
         {
             
@@ -146,11 +118,6 @@ RegisterNetEvent('qb-bbq:FeelingGood', function(data)
             
             }
         },
-       --[[ {
-            id = 7,
-            header = "Close (ESC)",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
-        },]]
     })
 end)
 
@@ -159,7 +126,7 @@ RegisterNetEvent('qb-bbq:FeelingBad', function(data)
         {
             
             header = "| Oh No that is a shame, can i interest you in some fresh BBQ products? |",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
+            isMenuHeader = true, 
         },
         {
             
@@ -177,18 +144,174 @@ RegisterNetEvent('qb-bbq:FeelingBad', function(data)
         
             }
         },
-        --[[{
+    })
+end)
+
+RegisterNetEvent('qb-bbq:shop', function(data)
+    exports['qb-menu']:openMenu({
+        {
+            
+            header = "| Billy |",
+            txt = "Heres My Stock",
+            isMenuHeader = true, 
+        },
+        {
+            
+            header = "Raw Burger",
+            txt = "",
+            params = {
+                event = "qb-bbq:client:BuyBurger"
+            }
+        },
+        {
+            
+            header = "Raw Chicken Burger",
+            txt = "",
+            params = {
+                event = "qb-bbq:client:BuyChicken"
+            }
+        },
+        {
+            
+            header = "HotDog Tin",
+            txt = "",
+            params = {
+                event = "qb-bbq:client:BuyHotDog"
+            }
+        },
+        {
+            
+            header = "Raw Ribs",
+            txt = "",
+            params = {
+                event = "qb-bbq:client:BuyRibs"
+            }
+        },
+        {
+            
+            header = "Raw Brisket",
+            txt = "",
+            params = {
+                event = "qb-bbq:client:BuyBrisket"
+            }
+        },
+        {
+            
+            header = "Raw Jacket",
+            txt = "",
+            params = {
+                event = "qb-bbq:client:BuyJacket"
+            }
+        },
+        {
             id = 7,
             header = "Close (ESC)",
-            isMenuHeader = true, -- Set to true to make a nonclickable title
-        },]]
+            isMenuHeader = true, 
+        },
     })
 end)
 
 --buying--
-RegisterNetEvent("qb-bbq:shop")
-AddEventHandler("qb-bbq:shop", function()
-    TriggerServerEvent("inventory:server:OpenInventory", "shop", "bbq-products", Config.Items)
+RegisterNetEvent('qb-bbq:client:BuyBurger', function()
+    QBCore.Functions.Progressbar('name_here', 'Buying Burgers...', 2000, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = 'anim@gangops@facility@servers@',
+        anim = 'idle',
+        flags = 16,
+    }, {}, {}, function()
+        TriggerServerEvent('qb-bbq:server:BuyBurger')
+        QBCore.Functions.Notify('You Bought some Burgers', 'primary', 7500)
+        ClearPedTasks(PlayerPedId())
+    end)
+end)
+
+RegisterNetEvent('qb-bbq:client:BuyChicken', function()
+    QBCore.Functions.Progressbar('name_here', 'Buying Chicken Burgers...', 2000, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = 'anim@gangops@facility@servers@',
+        anim = 'idle',
+        flags = 16,
+    }, {}, {}, function()
+        TriggerServerEvent('qb-bbq:server:BuyChicken')
+        QBCore.Functions.Notify('You Bought some Chicken Burgers', 'primary', 7500)
+        ClearPedTasks(PlayerPedId())
+    end)
+end)
+
+RegisterNetEvent('qb-bbq:client:BuyHotDog', function()
+    QBCore.Functions.Progressbar('name_here', 'Buying HotDogs...', 2000, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = 'anim@gangops@facility@servers@',
+        anim = 'idle',
+        flags = 16,
+    }, {}, {}, function()
+        TriggerServerEvent('qb-bbq:server:BuyHotDog')
+        QBCore.Functions.Notify('You Bought some HotDogs', 'primary', 7500)
+        ClearPedTasks(PlayerPedId())
+    end)
+end)
+
+RegisterNetEvent('qb-bbq:client:BuyRibs', function()
+    QBCore.Functions.Progressbar('name_here', 'Buying Ribs...', 2000, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = 'anim@gangops@facility@servers@',
+        anim = 'idle',
+        flags = 16,
+    }, {}, {}, function()
+        TriggerServerEvent('qb-bbq:server:BuyRibs')
+        QBCore.Functions.Notify('You Bought some Ribs', 'primary', 7500)
+        ClearPedTasks(PlayerPedId())
+    end)
+end)
+
+RegisterNetEvent('qb-bbq:client:BuyBrisket', function()
+    QBCore.Functions.Progressbar('name_here', 'Buying Brisket...', 2000, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = 'anim@gangops@facility@servers@',
+        anim = 'idle',
+        flags = 16,
+    }, {}, {}, function()
+        TriggerServerEvent('qb-bbq:server:BuyBrisket')
+        QBCore.Functions.Notify('You Bought some Brisket', 'primary', 7500)
+        ClearPedTasks(PlayerPedId())
+    end)
+end)
+
+RegisterNetEvent('qb-bbq:client:BuyJacket', function()
+    QBCore.Functions.Progressbar('name_here', 'Buying Potatoes...', 2000, false, true, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = 'anim@gangops@facility@servers@',
+        anim = 'idle',
+        flags = 16,
+    }, {}, {}, function()
+        TriggerServerEvent('qb-bbq:server:BuyJacket')
+        QBCore.Functions.Notify('You Bought some Potatoes', 'primary', 7500)
+        ClearPedTasks(PlayerPedId())
+    end)
 end)
 
 Citizen.CreateThread(function()
@@ -419,18 +542,4 @@ RegisterNetEvent('qb-bbq:client:CookJacket', function()
         end
     end, "b-uc-jacket")  
 end)
-
---Prop Model for target
-
---[[exports['qb-target']:AddTargetBones(Config.Objects, {
-    options = {
-        {
-            type = "client",
-            event = "qb-menu:BBQMenu",
-            icon = "fas fa-burger",
-            label = "Cook",
-        },
-    },
-    distance = 2.5
-}) ]]
 
