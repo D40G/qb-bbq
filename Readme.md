@@ -26,8 +26,7 @@ qb-shops - https://github.com/qbcore-framework/qb-shops
 
 ## Known Issues 
 ```
-FIXED -- prop sometimes stays in hand after emote is done. i believe this is an issue with dpemotes
-but i will look into this more
+FIXED -- shop not working on some servers. now converted to qb-menu based shop
 ```
 
 ## Credits : 
