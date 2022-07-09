@@ -11,57 +11,18 @@ Config.JacketAmount = 1 --Jacket potatoes
 --buying ingredients
 Config.BuyPed = 'a_m_m_hillbilly_01'
 Config.BuyLocation = vector4(1084.35, 6509.35, 21.04, 134.77)  --must be vector 4 not 3
-Config.Items = {   ---set prices,amount to whatever your server economy is.
-    label = "Stall",
-        slots = 6,
-        items = {
-            [1] = {
-                name = "b-uc-burger",
-                price = 3,
-                amount = 50,
-                info = {},
-                type = "item",
-                slot = 1,
-            },
-            [2] = {
-                name = "b-uc-chicken",
-                price = 4,
-                amount = 50,
-                info = {},
-                type = "item",
-                slot = 2,
-            },
-            [3] = {
-                name = "b-uc-hotdog",
-                price = 2,
-                amount = 50,
-                info = {},
-                type = "item",
-                slot = 3,
-            },
-            [4] = {
-                name = "b-uc-brisket",
-                price = 2,
-                amount = 50,
-                info = {},
-                type = "item",
-                slot = 4,
-            },
-            [5] = {
-                name = "b-uc-ribs",
-                price = 5,
-                amount = 20,
-                info = {},
-                type = "item",
-                slot = 5,
-            },
-            [6] = {
-                name = "b-uc-jacket",
-                price = 5,
-                amount = 50,
-                info = {},
-                type = "item",
-                slot = 6,
-            },
-        }
-    }
+--how much you will buy in one go--set however you want
+Config.BuyBurgerAmount = 1 
+Config.BuyChickenAmount = 1
+Config.BuyHotDogAmount = 1
+Config.BuyRibsAmount = 1
+Config.BuyBrisketAmount = 1
+Config.BuyJacketAmount = 1
+--Amount it costs to Buy --
+Config.BuyBurgerCost = 5 
+Config.BuyChickenCost = 5
+Config.BuyHotDogCost = 5
+Config.BuyRibsCost = 5
+Config.BuyBrisketCost = 5
+Config.BuyJacketCost = 5
+
