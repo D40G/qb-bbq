@@ -7,7 +7,7 @@ Discord - https://discord.gg/3WYz3zaqG5
 
 - Please make sure u use the latest dependencies aswell as core for this in order to work.
 
-- This Job has been tested on the latest build as of 07/07/2022.
+- This Job has been tested on the latest build as of 26/07/2022.
 
 
 ## Dependencies :
