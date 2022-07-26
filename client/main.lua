@@ -2,6 +2,18 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = {}
 local IsCookingFood = false
 
+exports['qb-target']:AddTargetModel(Config.BBQModels, {
+    options = {
+        {
+            type = "client",
+            event = "qb-bbq:BBQMenu",
+            icon = "fas fa-burger",
+            label = "Use BBQ",
+        },
+    },
+    distance = 2.5
+})
+
 
 --BBQ Menu
 RegisterNetEvent('qb-bbq:BBQMenu', function(data)
