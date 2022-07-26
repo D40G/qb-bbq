@@ -123,7 +123,7 @@ QBCore.Functions.CreateUseableItem("b-jacket", function(source, item)
 end)
 
 ```
-## Add into Qb-target/init.lua/Config.TargetModels
+## IF UPDATING DELETE THIS FROM Qb-target/init.lua/Config.TargetModels
 ``` 
 ["qb-bbq"] = {
         models = {
