@@ -1,5 +1,12 @@
 Config = {}
 
+Config.BBQModels = {
+    1903501406,
+    286252949,
+    519797612,
+    -476379988,
+}
+
 --amount of cooked items you get back when cooking
 Config.BurgerAmount = 3 --burger
 Config.ChickenAmount = 3 --chicken burger
