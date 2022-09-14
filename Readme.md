@@ -1,3 +1,5 @@
+Update - 14/9/22 - Purchaseable grills that you can place in the world and use. updated for new inventory update. 
+
 
 Discord - https://discord.gg/3WYz3zaqG5
 
@@ -7,7 +9,7 @@ Discord - https://discord.gg/3WYz3zaqG5
 
 - Please make sure u use the latest dependencies aswell as core for this in order to work.
 
-- This Job has been tested on the latest build as of 26/07/2022.
+- This Job has been tested on the latest build as of 07/07/2022.
 
 
 ## Dependencies :
@@ -31,9 +33,11 @@ FIXED -- shop not working on some servers. now converted to qb-menu based shop
 
 ## Credits : 
 
-- BerkieB for his qb-target.
 - Breadlord as this was his original idea and he gave me permission to do it instead. 
 - Jason. for giving me some code to delete prop after use - Top Guy
+- Flash061 for his idea of buyable grills to place down
+- HunterMak98 for her images, names and descriptions
+- Toxmina for helping with images 
 
 ## Insert into @qb-core/shared/items.lua 
 
@@ -52,7 +56,12 @@ QBShared.Items = {
     ['b-uc-brisket'] 			    = {['name'] = 'b-uc-brisket', 		           	['label'] = 'Raw Brisket', 	        ['weight'] = 500, 		['type'] = 'item', 		['image'] = 'b-uc-brisket.png', 	       	['unique'] = false, 	['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'Raw Brisket Joint'},
     ['b-jacket'] 			        = {['name'] = 'b-jacket', 		        	   	['label'] = 'Loaded Jacket', 	    ['weight'] = 500, 		['type'] = 'item', 		['image'] = 'b-jacket.png', 	        	['unique'] = false, 	['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'A Fully Loaded Jacket Potato'},
     ['b-uc-jacket'] 			    = {['name'] = 'b-uc-jacket', 		           	['label'] = 'Raw Jacket', 	        ['weight'] = 500, 		['type'] = 'item', 		['image'] = 'b-uc-jacket.png', 	        	['unique'] = false, 	['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'A Raw Jacket Potato'},
-    
+   ['bbq1'] 			 	    	 = {['name'] = 'bbq1', 					    	['label'] = 'Forge Djorman', 		['weight'] = 500, 		['type'] = 'item', 		['image'] = 'bbq1.png', 		    		['unique'] = true, 		['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'For when youre wanting that perfect char-grilled taste'},
+	['bbq2'] 			 			 = {['name'] = 'bbq2', 					    	['label'] = 'Leetle Grill', 		['weight'] = 500, 		['type'] = 'item', 		['image'] = 'bbq2.png', 		    		['unique'] = true, 		['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'Who likes tiny portable grills? We do'},
+	['bbq3'] 			 			 = {['name'] = 'bbq3', 					    	['label'] = 'Stand Grill', 			['weight'] = 500, 		['type'] = 'item', 		['image'] = 'bbq3.png', 		    		['unique'] = true, 		['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'Its not the best, but definitely not the worst either'},
+	['bbq4'] 			 			 = {['name'] = 'bbq4', 				    		['label'] = 'Craftguy Grill', 		['weight'] = 500, 		['type'] = 'item', 		['image'] = 'bbq4.png', 		    		['unique'] = true, 		['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'This may create hockey pucks of char'},
+	['bbq5'] 			 			 = {['name'] = 'bbq5', 				    		['label'] = 'Brick-Lain Grill', 	['weight'] = 500, 		['type'] = 'item', 		['image'] = 'bbq5.png', 		    		['unique'] = true, 		['useable'] = true, 	['shouldClose'] = true,	   ['combinable'] = nil,   ['description'] = 'So youre old fashioned, huh?'},
+	
 }
 
 ```
@@ -123,25 +132,4 @@ QBCore.Functions.CreateUseableItem("b-jacket", function(source, item)
 end)
 
 ```
-## IF UPDATING DELETE THIS FROM Qb-target/init.lua/Config.TargetModels
-``` 
-["qb-bbq"] = {
-        models = {
-            1903501406,
-            286252949,
-            519797612,
-            -476379988
-        },
-        options = {
-            {
-                type = "client", 
-                event = "qb-bbq:BBQMenu", 
-                icon = 'fas fa-burger', 
-                label = 'Cook', 
-            }
-        },
-        distance = 2.5,
-    },
-}
 
-```
