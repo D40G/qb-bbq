@@ -27,7 +27,7 @@ Config.JacketAmount = 1 --Jacket potatoes
 
 --buying ingredients
 Config.BuyPed = 'a_m_m_hillbilly_01'
-Config.BuyLocation = vector4(1084.35, 6509.35, 21.04, 134.77)  --must be vector 4 not 3
+Config.BuyLocation = vector4(1084.35, 6509.35, 21.04, 134.77)  --must be vector 4 not 3  -- blip will follow this guy too
 
 
 Config.BBQShop = {
