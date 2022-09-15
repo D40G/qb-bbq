@@ -540,6 +540,18 @@ Citizen.CreateThread(function()
 	end
 end)
 
+Citizen.CreateThread(function()
+    meatguy = AddBlipForCoord(Config.BuyLocation)
+    SetBlipSprite (meatguy, 671)
+    SetBlipDisplay(meatguy, 4)
+    SetBlipScale  (meatguy, 0.4)
+    SetBlipAsShortRange(meatguy, true)
+    SetBlipColour(meatguy, 1)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName("Meat Guy")
+    EndTextCommandSetBlipName(meatguy)
+end) 
+
 
 ----/////BBQ 1 //////-----------
 
