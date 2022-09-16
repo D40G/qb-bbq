@@ -138,7 +138,7 @@ RegisterNetEvent('qb-bbq:BBQMenu', function(data)
         {
             
             header = "• Chicken Burger",
-            txt = "Rolling Paper , Dream Weed",
+            txt = "Cook a Chicken Burger",
             params = {
                 event = "qb-bbq:client:CookChicken"
             }
