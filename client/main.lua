@@ -277,7 +277,7 @@ Citizen.CreateThread(function()
             options = {
                 {
                     type="client",
-                    event = "qb-bbq:StartConvo",
+                    event = "qb-bbq:CheckConvo",
                     icon = "fas fa-smile",
                     label = "Greet"
                 }
@@ -285,6 +285,14 @@ Citizen.CreateThread(function()
           distance = 2.5,
         },
     })
+end)
+
+RegisterNetEvent('qb-bbq:CheckConvo', function()
+    if Config.EnableConvo then
+        TriggerEvent('qb-bbq:StartConvo')
+    else
+        TriggerEvent('qb-bbq:shop')
+    end
 end)
 
 --Recipes--
@@ -583,7 +591,6 @@ AddEventHandler("qb-bbq:PlaceBBQ1", function()
         BBQ1Placed = true
         BBQ1PickedUp = false
 
-        --DeleteEntity(prop1)
 
         TriggerServerEvent('qb-bbq:server:RemoveBBQ1')
         TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items['bbq1'], "remove")
@@ -613,7 +620,7 @@ AddEventHandler('qb-bbq:PickupBBQ1', function()
         BBQ1Placed = false
         BBQ1PickedUp = true
         end)
-     end
+    end
 end)
 
 ----///////BBQ 2 ///////////-------
