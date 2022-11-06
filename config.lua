@@ -17,6 +17,8 @@ Config.BBQ5Model = {
     -476379988,
 }
 
+Config.JimShops = false --set true if using jim shops
+
 --amount of cooked items you get back when cooking
 Config.BurgerAmount = 3 --burger
 Config.ChickenAmount = 3 --chicken burger
