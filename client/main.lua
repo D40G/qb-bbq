@@ -116,7 +116,11 @@ end)
 
 RegisterNetEvent("qb-bbq:shop")
 AddEventHandler("qb-bbq:shop", function()
-    TriggerServerEvent("inventory:server:OpenInventory", "shop", "BBQ Items", Config.BBQShop)
+    if Config.JimShops == true then
+        TriggerServerEvent("jim-shops:ShopOpen", "shop", "BBQ Items", Config.BBQShop)
+    else
+        TriggerServerEvent("inventory:server:OpenInventory", "shop", "BBQ Items", Config.BBQShop)
+    end
 end)
 
 --BBQ Menu
@@ -492,7 +496,11 @@ end)
 ------/////////NEW PROP SHOPS///////-------
 RegisterNetEvent("qb-bbq:propshop")
 AddEventHandler("qb-bbq:propshop", function()
-    TriggerServerEvent("inventory:server:OpenInventory", "shop", "Home Grillin", Config.PropShop)
+    if Config.JimShops == true then
+        TriggerServerEvent("jim-shops:ShopOpen", "shop", "Home Grillin", Config.PropShop)
+    else
+        TriggerServerEvent("inventory:server:OpenInventory", "shop", "Home Grillin", Config.PropShop)
+    end
 end)
 
 Shops.Draw3DText = function(coords, text)
