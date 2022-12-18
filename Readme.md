@@ -1,4 +1,4 @@
-Update - 14/9/22 - Purchaseable grills that you can place in the world and use. updated for new inventory update. 
+Update - 18/12/22 - Now supports custom recipes. editable through config file only
 
 
 Discord - https://discord.gg/3WYz3zaqG5
@@ -38,6 +38,8 @@ FIXED -- shop not working on some servers. now converted to qb-menu based shop
 - Flash061 for his idea of buyable grills to place down
 - HunterMak98 for her images, names and descriptions
 - Toxmina for helping with images 
+- Curly for his menu style
+- Willyshotty for his idea of custom recipes
 
 ## Insert into @qb-core/shared/items.lua 
 
