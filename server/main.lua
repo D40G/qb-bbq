@@ -1,52 +1,40 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
---Recipe Item Callbacks
-RegisterNetEvent('qb-bbq:server:CookBurger', function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.AddItem("b-burger", Config.BurgerAmount)
-    Player.Functions.RemoveItem("b-uc-burger", 1)
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-burger'], "add")
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-uc-burger'], "removed")
+RegisterNetEvent('qb-bbq:server:CookItem', function(data, food)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local receiveAmount = 1
+    Player.Functions.AddItem(data, receiveAmount)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[data], "add")
 end)
 
-RegisterNetEvent('qb-bbq:server:CookHotDog', function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.AddItem("b-hotdog", Config.HotDogAmount)
-    Player.Functions.RemoveItem("b-uc-hotdog", 1)
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-hotdog'], "add")
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-uc-hotdog'], "removed")
+RegisterNetEvent('qb-bbq:server:RemoveItem', function(item, amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    Player.Functions.RemoveItem(item, amount)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], "remove")
 end)
 
-RegisterNetEvent('qb-bbq:server:CookChicken', function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.AddItem("b-chicken", Config.ChickenAmount)
-    Player.Functions.RemoveItem("b-uc-chicken", 1)
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-chicken'], "add")
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-uc-chicken'], "removed")
-end)
 
-RegisterNetEvent('qb-bbq:server:CookRibs', function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.AddItem("b-ribs", Config.RibsAmount)
-    Player.Functions.RemoveItem("b-uc-ribs", 1)
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-ribs'], "add")
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-uc-ribs'], "removed")
-end)
 
-RegisterNetEvent('qb-bbq:server:CookBrisket', function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.AddItem("b-brisket", Config.BrisketAmount)
-    Player.Functions.RemoveItem("b-uc-brisket", 1)
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-brisket'], "add")
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-uc-brisket'], "removed")
-end)
+----Recipe Item Callbacks
 
-RegisterNetEvent('qb-bbq:server:CookJacket', function()
-    local Player = QBCore.Functions.GetPlayer(source)
-    Player.Functions.AddItem("b-jacket", Config.JacketAmount)
-    Player.Functions.RemoveItem("b-uc-jacket", 1)
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-jacket'], "add")
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['b-uc-jacket'], "removed")
+QBCore.Functions.CreateCallback('qb-bbq:server:enoughIngredients', function(source, cb, Ingredients)
+    local src = source
+    local hasItems = false
+    local idk = 0
+    local player = QBCore.Functions.GetPlayer(source)
+    for k, v in pairs(Ingredients) do
+        if player.Functions.GetItemByName(v.item) and player.Functions.GetItemByName(v.item).amount >= v.amount then
+            idk = idk + 1
+            if idk == #Ingredients then
+                cb(true)
+            end
+        else
+            cb(false)
+            return
+        end
+    end
 end)
 
 QBCore.Functions.CreateUseableItem("bbq1", function(source, item)
