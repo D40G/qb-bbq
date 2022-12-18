@@ -1,6 +1,7 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = {}
 local IsCookingFood = false
+--local BBQFuel = 0 --WIP
 Shops = {}
 local BBQ1Placed = false
 local BBQ1PickedUp = true
@@ -17,10 +18,11 @@ Citizen.CreateThread(function()
     exports['qb-target']:AddTargetModel(Config.BBQ1Model, {
         options = {
             {
-                type = "client",
-                event = "qb-bbq:BBQMenu",
                 icon = "fas fa-burger",
                 label = "Use BBQ",
+                action = function()
+                    OpenCookingMenu()
+                end
             },
             {
                 type = "client",
@@ -31,16 +33,14 @@ Citizen.CreateThread(function()
         },
         distance = 2.5
     })
-end)
-
-Citizen.CreateThread(function()
     exports['qb-target']:AddTargetModel(Config.BBQ2Model, {
         options = {
             {
-                type = "client",
-                event = "qb-bbq:BBQMenu",
                 icon = "fas fa-burger",
                 label = "Use BBQ",
+                action = function()
+                    OpenCookingMenu()
+                end
             },
             {
                 type = "client",
@@ -51,16 +51,14 @@ Citizen.CreateThread(function()
         },
         distance = 2.5
     })
-end)
-
-Citizen.CreateThread(function()
     exports['qb-target']:AddTargetModel(Config.BBQ3Model, {
         options = {
             {
-                type = "client",
-                event = "qb-bbq:BBQMenu",
                 icon = "fas fa-burger",
                 label = "Use BBQ",
+                action = function()
+                    OpenCookingMenu()
+                end
             },
             {
                 type = "client",
@@ -71,16 +69,14 @@ Citizen.CreateThread(function()
         },
         distance = 2.5
     })
-end)
-
-Citizen.CreateThread(function()
     exports['qb-target']:AddTargetModel(Config.BBQ4Model, {
         options = {
             {
-                type = "client",
-                event = "qb-bbq:BBQMenu",
                 icon = "fas fa-burger",
                 label = "Use BBQ",
+                action = function()
+                    OpenCookingMenu()
+                end
             },
             {
                 type = "client",
@@ -91,16 +87,14 @@ Citizen.CreateThread(function()
         },
         distance = 2.5
     })
-end)
-
-Citizen.CreateThread(function()
     exports['qb-target']:AddTargetModel(Config.BBQ5Model, {
         options = {
             {
-                type = "client",
-                event = "qb-bbq:BBQMenu",
                 icon = "fas fa-burger",
                 label = "Use BBQ",
+                action = function()
+                    OpenCookingMenu()
+                end
             },
             {
                 type = "client",
@@ -123,374 +117,12 @@ AddEventHandler("qb-bbq:shop", function()
     end
 end)
 
---BBQ Menu
-RegisterNetEvent('qb-bbq:BBQMenu', function(data)
-    exports['qb-menu']:openMenu({
-        {
-            
-            header = "| Cook |",
-            isMenuHeader = true, 
-        },
-        {
-            
-            header = "• Burger",
-            txt = "Cook a Juicy Burger",
-            params = {
-                event = "qb-bbq:client:CookBurger"
-            }
-        },
-        {
-            
-            header = "• Chicken Burger",
-            txt = "Cook a Chicken Burger",
-            params = {
-                event = "qb-bbq:client:CookChicken"
-            }
-        },
-        {
-            
-            header = "• Hot Dog",
-            txt = "An American Hero",
-            params = {
-                event = "qb-bbq:client:CookHotDog"
-            }
-        },  
-        {
-            
-            header = "• Spare Ribs",
-            txt = "Juicy Pork Ribs with BBQ Sauce",
-            params = {
-                event = "qb-bbq:client:CookRibs"
-            }
-        },
-        {
-            
-            header = "• Brisket",
-            txt = "A Tender Joint of Brisket",
-            params = {
-                event = "qb-bbq:client:CookBrisket"
-            }
-        },
-        {
-            
-            header = "• Loaded Jacket",
-            txt = "A Jacket Full of Goodness",
-            params = {
-                event = "qb-bbq:client:CookJacket"
-            }
-        },
-        {
-            id = 7,
-            header = "Close (ESC)",
-            isMenuHeader = true, 
-        },
-    })
-end)
-
-
-RegisterNetEvent('qb-bbq:StartConvo', function(data)
-    exports['qb-menu']:openMenu({
-        {
-            
-            header = "| Billy |",
-            txt = "Hey Man hows it going?",
-            isMenuHeader = true, 
-        },
-        {
-            
-            header = "Im feeling good, Thank you",
-            txt = "",
-            params = {
-                event = "qb-bbq:FeelingGood"
-            }
-        },
-        {
-            
-            header = "Im not having a good day today",
-            txt = "",
-            params = {
-                event = "qb-bbq:FeelingBad"
-            }
-        },
-    })
-end)
-
-RegisterNetEvent('qb-bbq:FeelingGood', function(data)
-    exports['qb-menu']:openMenu({
-        {
-            
-            header = "| That is Great to hear Friend, you looking to buy some fresh BBQ products? |",
-            isMenuHeader = true, 
-        },
-        {
-            
-            header = "Yea i would love to browse your stuff",
-            txt = "$ Buy $",
-            params = {
-                event = "qb-bbq:shop"
-            }
-        },
-        {
-            
-            header = "No thank you, ill be going now",
-            txt = "",
-            params = {
-            
-            }
-        },
-    })
-end)
-
-RegisterNetEvent('qb-bbq:FeelingBad', function(data)
-    exports['qb-menu']:openMenu({
-        {
-            
-            header = "| Oh No that is a shame, can i interest you in some fresh BBQ products? |",
-            isMenuHeader = true, 
-        },
-        {
-            
-            header = "Sure, i guess so...",
-            txt = "$ Buy $",
-            params = {
-                event = "qb-bbq:shop"
-            }
-        },
-        {
-            
-            header = "No thank you, ill be going now",
-            txt = "",
-            params = {
-        
-            }
-        },
-    })
-end)
-
-
-Citizen.CreateThread(function()
-    exports['qb-target']:SpawnPed({
-        model = Config.BuyPed,
-        coords = Config.BuyLocation, 
-        minusOne = true, --may have to change this if your ped is in the ground
-        freeze = true, 
-        invincible = true, 
-        blockevents = true,
-        scenario = 'WORLD_HUMAN_DRUG_DEALER',
-        target = { 
-            options = {
-                {
-                    type="client",
-                    event = "qb-bbq:CheckConvo",
-                    icon = "fas fa-smile",
-                    label = "Greet"
-                }
-            },
-          distance = 2.5,
-        },
-    })
-end)
-
 RegisterNetEvent('qb-bbq:CheckConvo', function()
     if Config.EnableConvo then
         TriggerEvent('qb-bbq:StartConvo')
     else
         TriggerEvent('qb-bbq:shop')
     end
-end)
-
---Recipes--
-RegisterNetEvent('qb-bbq:client:CookBurger', function() 
-    if QBCore.Functions.HasItem('b-uc-burger') then
-            IsCookingFood = true
-            QBCore.Functions.Progressbar('cook', 'Cooking Burger . . .', 10000, false, true, {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = false,
-                disableInventory = true,
-            }, {
-                animDict = 'amb@prop_human_bbq@male@idle_a',
-                anim = 'idle_b',
-                flags = 8,
-            }, {
-                model = 'prop_fish_slice_01',
-                bone = 28422,
-                coords = { x = -0.005, y = 0.00, z = 0.00 },
-                rotation = { x = 350.0, y = 320.0, z = 0.0 },
-            }, {}, function()
-                TriggerServerEvent('qb-bbq:server:CookBurger')
-                QBCore.Functions.Notify("You Cooked a Burger!", "success", "20")
-                IsCookingFood = false 
-            end, function() -- Cancel
-                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
-                QBCore.Functions.Notify("Canceled..", "error")
-                IsCookingFood = false
-            end)
-        else
-            QBCore.Functions.Notify("You need some uncooked burgers!", "error")
-        end
-end)
-
-
-RegisterNetEvent('qb-bbq:client:CookChicken', function() 
-    if QBCore.Functions.HasItem('b-uc-chicken') then
-            IsCookingFood = true
-            QBCore.Functions.Progressbar("cook", "Cooking Chicken Burger", 10000, false, true, {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = false,
-                disableInventory = true,
-            }, {
-                animDict = 'amb@prop_human_bbq@male@idle_a',
-                anim = 'idle_b',
-                flags = 8,
-            }, {
-                model = 'prop_fish_slice_01',
-                bone = 28422,
-                coords = { x = -0.005, y = 0.00, z = 0.00 },
-                rotation = { x = 350.0, y = 320.0, z = 0.0 },
-            }, {}, function()
-                TriggerServerEvent('qb-bbq:server:CookChicken')
-                QBCore.Functions.Notify("You Cooked a Chicken Burger!", "success", "20")
-                IsCookingFood = false  
-            end, function() -- Cancel
-                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
-                QBCore.Functions.Notify("Canceled..", "error")
-                IsCookingFood = false
-            end)
-        else
-            QBCore.Functions.Notify("You need an uncooked Chicken burger!", "error")
-        end 
-end)
-
-RegisterNetEvent('qb-bbq:client:CookHotDog', function() 
-    if QBCore.Functions.HasItem('b-uc-hotdog') then
-            IsCookingFood = true
-            QBCore.Functions.Progressbar("cook", "Cooking Hot Dog", 7000, false, true, {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = false,
-                disableInventory = true,
-            }, {
-                animDict = 'amb@prop_human_bbq@male@idle_a',
-                anim = 'idle_b',
-                flags = 8,
-            }, {
-                model = 'prop_fish_slice_01',
-                bone = 28422,
-                coords = { x = -0.005, y = 0.00, z = 0.00 },
-                rotation = { x = 350.0, y = 320.0, z = 0.0 },
-            }, {}, function()
-                TriggerServerEvent('qb-bbq:server:CookHotDog')
-                QBCore.Functions.Notify("You Cooked a HotDog!", "success", "20")
-                IsCookingFood = false   
-            end, function() -- Cancel
-                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
-                QBCore.Functions.Notify("Canceled..", "error")
-                IsCookingFood = false  
-            end)
-        else
-            QBCore.Functions.Notify("You need some uncooked hotdog!", "error")
-        end  
-end)
-
-RegisterNetEvent('qb-bbq:client:CookRibs', function() 
-    if QBCore.Functions.HasItem('b-uc-ribs') then
-            IsCookingFood = true
-            QBCore.Functions.Progressbar("cook", "Cooking Ribs", 10000, false, true, {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = false,
-                disableInventory = true,
-            }, {
-                animDict = 'amb@prop_human_bbq@male@idle_a',
-                anim = 'idle_b',
-                flags = 8,
-            }, {
-                model = 'prop_fish_slice_01',
-                bone = 28422,
-                coords = { x = -0.005, y = 0.00, z = 0.00 },
-                rotation = { x = 350.0, y = 320.0, z = 0.0 },
-            }, {}, function()
-                TriggerServerEvent('qb-bbq:server:CookRibs')
-                QBCore.Functions.Notify("You Cooked Spare Ribs!", "success", "20")
-                IsCookingFood = false 
-            end, function() -- Cancel
-                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
-                QBCore.Functions.Notify("Canceled..", "error")
-                IsCookingFood = false
-            end)
-        else
-            QBCore.Functions.Notify("You need uncooked ribs!", "error")
-        end 
-end)
-
-RegisterNetEvent('qb-bbq:client:CookBrisket', function() 
-    if QBCore.Functions.HasItem('b-uc-brisket') then
-            IsCookingFood = true
-            QBCore.Functions.Progressbar("cook", "Cooking Brisket", 20000, false, true, {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = false,
-                disableInventory = true,
-            }, {
-                animDict = 'amb@prop_human_bbq@male@idle_a',
-                anim = 'idle_b',
-                flags = 8,
-            }, {
-                model = 'prop_fish_slice_01',
-                bone = 28422,
-                coords = { x = -0.005, y = 0.00, z = 0.00 },
-                rotation = { x = 350.0, y = 320.0, z = 0.0 },
-            }, {}, function()
-                TriggerServerEvent('qb-bbq:server:CookBrisket')
-                QBCore.Functions.Notify("You Cooked Brisket!", "success", "20")
-                IsCookingFood = false 
-            end, function() -- Cancel
-                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
-                QBCore.Functions.Notify("Canceled..", "error")
-                IsCookingFood = false 
-            end)
-        else
-            QBCore.Functions.Notify("You need uncooked brisket!", "error")
-        end
-end)
-
-RegisterNetEvent('qb-bbq:client:CookJacket', function() 
-    if QBCore.Functions.HasItem('b-uc-jacket') then
-            IsCookingFood = true
-            QBCore.Functions.Progressbar("cook", "Cooking Jacket Potato", 10000, false, true, {
-                disableMovement = false,
-                disableCarMovement = false,
-                disableMouse = false,
-                disableCombat = false,
-                disableInventory = true,
-            }, {
-                animDict = 'amb@prop_human_bbq@male@idle_a',
-                anim = 'idle_b',
-                flags = 8,
-            }, {
-                model = 'prop_fish_slice_01',
-                bone = 28422,
-                coords = { x = -0.005, y = 0.00, z = 0.00 },
-                rotation = { x = 350.0, y = 320.0, z = 0.0 },
-            }, {}, function()
-                TriggerServerEvent('qb-bbq:server:CookJacket')
-                QBCore.Functions.Notify("You Cooked a Jacket!", "success", "20")
-                IsCookingFood = false 
-            end, function() -- Cancel
-                StopAnimTask(PlayerPedId(), 'amb@prop_human_bbq@male@idle_a', 'idle_b', 1.0)
-                QBCore.Functions.Notify("Canceled..", "error")
-                IsCookingFood = false
-            end)
-        else
-            QBCore.Functions.Notify("You need an uncooked Jacket!", "error")
-        end
 end)
 
 ------/////////NEW PROP SHOPS///////-------
@@ -869,4 +501,78 @@ AddEventHandler('qb-bbq:PickupBBQ5', function()
         BBQ5PickedUp = true
         end)
      end
+end)
+
+function OpenCookingMenu()
+    local columns = {
+        {
+            header = "Cook",
+            isMenuHeader = true,
+        },
+    }
+    for k, v in pairs(Config.Recipes) do
+        local item = {}
+        item.header = "<img src=nui://"..Config.ImagePath..QBCore.Shared.Items[v.hash].image.." width=35px style='margin-right: 10px'> " .. v.label --possible issue(no issue yet though)
+        local text = ""
+        for k, v in pairs(v.Ingredients) do
+            text = text .. "- " .. v.item .. ": " .. v.amount .. "<br>"
+        end
+        item.text = text
+        item.params = {
+            event = 'qb-bbq:client:CookItem',
+            args = {
+                type = k
+            }
+        }
+        table.insert(columns, item)
+    end
+
+    exports['qb-menu']:openMenu(columns)
+end
+
+local function CookFood(food, data)
+    IsCookingFood = true
+    QBCore.Functions.Progressbar('cooking_food', 'Cooking '..Config.Recipes[food].label, Config.Recipes[food].CookTime * 1000, false, false, {
+        disableMovement = true,
+        disableCarMovement = true,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+        animDict = 'amb@prop_human_bbq@male@idle_a',
+        anim = 'idle_b',
+        flags = 8,
+    }, {
+        model = 'prop_fish_slice_01',
+        bone = 28422,
+        coords = { x = -0.005, y = 0.00, z = 0.00 },
+        rotation = { x = 350.0, y = 320.0, z = 0.0 },
+    }, {}, function()
+        QBCore.Functions.Notify("Cooked "..Config.Recipes[food].label, 'success')
+        TriggerServerEvent('qb-bbq:server:CookItem', Config.Recipes[food].hash)
+        for k, v in pairs(Config.Recipes[food].Ingredients) do
+            TriggerServerEvent('qb-bbq:server:RemoveItem', v.item, v.amount)
+        end
+        TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+        ClearPedTasks(PlayerPedId())
+        IsCookingFood = false
+    end, function() -- Cancel
+        ClearPedTasks(PlayerPedId())
+        QBCore.Functions.Notify('You Stopped Cooking', 'error')
+        IsCookingFood = false
+    end)
+end
+
+
+
+-- Events
+
+RegisterNetEvent('qb-bbq:client:CookItem', function(data)
+    QBCore.Functions.TriggerCallback("qb-bbq:server:enoughIngredients", function(hasIngredients)
+        if (hasIngredients) and not IsCookingFood then
+            CookFood(data.type)
+        else
+            QBCore.Functions.Notify("You do not have enough ingredients", "error")
+            return
+        end
+    end, Config.Recipes[data.type].Ingredients)
 end)
