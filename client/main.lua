@@ -1,7 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = {}
 local IsCookingFood = false
---local BBQFuel = 0 --WIP
 Shops = {}
 local BBQ1Placed = false
 local BBQ1PickedUp = true
@@ -13,6 +12,15 @@ local BBQ4Placed = false
 local BBQ4PickedUp = true
 local BBQ5Placed = false
 local BBQ5PickedUp = true
+local FuelLevel = 0
+local FuelAmount = 0
+local AddingFueling = false
+
+Citizen.CreateThread(function()
+    if Config.EnableFuelSystem == false then
+        FuelLevel = 100
+    end
+end)
 
 Citizen.CreateThread(function()
     exports['qb-target']:AddTargetModel(Config.BBQ1Model, {
@@ -29,6 +37,16 @@ Citizen.CreateThread(function()
                 event = "qb-bbq:PickupBBQ1",
                 icon = "fas fa-hand",
                 label = "Pickup BBQ",
+            },
+            {
+                type = "client",
+                event = "qb-bbq:AddBBQFuel",
+                icon = "fas fa-fill-drip",
+                label = "Add Fuel",
+                canInteract = function(entity, distance, data) 
+                    if Config.EnableFuelSystem == false then return false end 
+                    return true
+                  end,
             },
         },
         distance = 2.5
@@ -48,6 +66,16 @@ Citizen.CreateThread(function()
                 icon = "fas fa-hand",
                 label = "Pickup BBQ",
             },
+            {
+                type = "client",
+                event = "qb-bbq:AddBBQFuel",
+                icon = "fas fa-fill-drip",
+                label = "Add Fuel",
+                canInteract = function(entity, distance, data) 
+                    if Config.EnableFuelSystem == false then return false end 
+                    return true
+                  end,
+            },
         },
         distance = 2.5
     })
@@ -65,6 +93,16 @@ Citizen.CreateThread(function()
                 event = "qb-bbq:PickupBBQ3",
                 icon = "fas fa-hand",
                 label = "Pickup BBQ",
+            },
+            {
+                type = "client",
+                event = "qb-bbq:AddBBQFuel",
+                icon = "fas fa-fill-drip",
+                label = "Add Fuel",
+                canInteract = function(entity, distance, data) 
+                    if Config.EnableFuelSystem == false then return false end 
+                    return true
+                  end,
             },
         },
         distance = 2.5
@@ -84,6 +122,16 @@ Citizen.CreateThread(function()
                 icon = "fas fa-hand",
                 label = "Pickup BBQ",
             },
+            {
+                type = "client",
+                event = "qb-bbq:AddBBQFuel",
+                icon = "fas fa-fill-drip",
+                label = "Add Fuel",
+                canInteract = function(entity, distance, data) 
+                    if Config.EnableFuelSystem == false then return false end 
+                    return true
+                  end,
+            },
         },
         distance = 2.5
     })
@@ -102,9 +150,35 @@ Citizen.CreateThread(function()
                 icon = "fas fa-hand",
                 label = "Pickup BBQ",
             },
+            {
+                type = "client",
+                event = "qb-bbq:AddBBQFuel",
+                icon = "fas fa-fill-drip",
+                label = "Add Fuel",
+                canInteract = function(entity, distance, data) 
+                    if Config.EnableFuelSystem == false then return false end 
+                    return true
+                  end,
+            },
         },
         distance = 2.5
     })
+    -- if Config.EnableStoves == true then
+    --     for k,v in pairs(Config.StoveModels) do
+    --         exports['qb-target']:AddTargetModel(v.model, {
+    --             options = {
+    --                 {
+    --                     icon = "fas fa-fire",
+    --                     label = "Cook",
+    --                     action = function()
+    --                         OpenCookingMenu()
+    --                     end
+    --                 }
+    --             },
+    --             distance = 2.5
+    --         })
+    --     end
+    -- end
 end)
 
 
@@ -136,68 +210,74 @@ AddEventHandler("qb-bbq:propshop", function()
 end)
 
 Shops.Draw3DText = function(coords, text)
-    local onScreen, _x, _y = World3dToScreen2d(coords.x, coords.y, coords.z)
-    
-    SetTextScale(0.38, 0.38)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 200)
-    SetTextEntry("STRING")
-    SetTextCentre(1)
+    if Config.EnablePropShop == true then
+        local onScreen, _x, _y = World3dToScreen2d(coords.x, coords.y, coords.z)
+        
+        SetTextScale(0.38, 0.38)
+        SetTextFont(4)
+        SetTextProportional(1)
+        SetTextColour(255, 255, 255, 200)
+        SetTextEntry("STRING")
+        SetTextCentre(1)
 
-    AddTextComponentString(text)
-    DrawText(_x, _y)
+        AddTextComponentString(text)
+        DrawText(_x, _y)
 
-    local factor = string.len(text) / 370
-    DrawRect(_x, _y + 0.0125, 0.015 + factor, 0.03, 41, 11, 41, 68)
+        local factor = string.len(text) / 370
+        DrawRect(_x, _y + 0.0125, 0.015 + factor, 0.03, 41, 11, 41, 68)
+    end
 end
 
 Citizen.CreateThread(function()
-	for i = 1, #Config.PropShopLoc do
-		local blip = AddBlipForCoord(Config.PropShopLoc[i])
+    if Config.EnablePropShop == true then
+	    for i = 1, #Config.PropShopLoc do
+	    	local blip = AddBlipForCoord(Config.PropShopLoc[i])
 
-		SetBlipSprite(blip, 541)
-		SetBlipScale(blip, 0.5)
-		SetBlipDisplay(blip, 4)
-		SetBlipAsShortRange(blip, true)
+	    	SetBlipSprite(blip, 541)
+	    	SetBlipScale(blip, 0.5)
+	    	SetBlipDisplay(blip, 4)
+	    	SetBlipAsShortRange(blip, true)
 
-		BeginTextCommandSetBlipName('STRING')
-		AddTextComponentString('Home Grillin')
-		EndTextCommandSetBlipName(blip)	
-	end
+	    	BeginTextCommandSetBlipName('STRING')
+	    	AddTextComponentString('Home Grillin')
+	    	EndTextCommandSetBlipName(blip)	
+	    end
 
-	while true do
-		local player, sleepThread = PlayerPedId(), 750;
+	    while true do
+	    	local player, sleepThread = PlayerPedId(), 750;
 
-		for i = 1, #Config.PropShopLoc do
-			local dst = #(GetEntityCoords(player) - Config.PropShopLoc[i]);
+	    	for i = 1, #Config.PropShopLoc do
+	    		local dst = #(GetEntityCoords(player) - Config.PropShopLoc[i]);
 
-			if dst < 2.5 then
-				Shops.Draw3DText(Config.PropShopLoc[i], '[~g~E~w~] Home Grillin');  --words you see when near shop
-				sleepThread = 5;
+	    		if dst < 2.5 then
+	    			Shops.Draw3DText(Config.PropShopLoc[i], '[~g~E~w~] Home Grillin');  --words you see when near shop
+	    			sleepThread = 5;
 
-				if dst < 1.5 then
-					if IsControlJustReleased(0, 38) then
-						TriggerEvent('qb-bbq:propshop')
-					end
-				end
-			end
-		end
-
-		Citizen.Wait(sleepThread)
-	end
+	    			if dst < 1.5 then
+	    				if IsControlJustReleased(0, 38) then
+	    					TriggerEvent('qb-bbq:propshop')
+	    				end
+	    			end
+	    		end
+	    	end
+            
+	    	Citizen.Wait(sleepThread)
+	    end
+    end
 end)
 
 Citizen.CreateThread(function()
-    meatguy = AddBlipForCoord(Config.BuyLocation)
-    SetBlipSprite (meatguy, 671)
-    SetBlipDisplay(meatguy, 4)
-    SetBlipScale  (meatguy, 0.4)
-    SetBlipAsShortRange(meatguy, true)
-    SetBlipColour(meatguy, 1)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Meat Guy")
-    EndTextCommandSetBlipName(meatguy)
+    if Config.EnableBBQShop == true then
+        meatguy = AddBlipForCoord(Config.BuyLocation)
+        SetBlipSprite (meatguy, 671)
+        SetBlipDisplay(meatguy, 4)
+        SetBlipScale  (meatguy, 0.4)
+        SetBlipAsShortRange(meatguy, true)
+        SetBlipColour(meatguy, 1)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName("Meat Guy")
+        EndTextCommandSetBlipName(meatguy)
+    end
 end) 
 
 
@@ -206,36 +286,36 @@ end)
 RegisterNetEvent("qb-bbq:PlaceBBQ1")
 AddEventHandler("qb-bbq:PlaceBBQ1", function()
     if not BBQ1Placed then
-    local playerPed = PlayerPedId()
-    local coords    = GetEntityCoords(playerPed)
-    local forward   = GetEntityForwardVector(playerPed)
-    local x, y, z   = table.unpack(coords + forward * 1.0)
+        local playerPed = PlayerPedId()
+        local coords    = GetEntityCoords(playerPed)
+        local forward   = GetEntityForwardVector(playerPed)
+        local x, y, z   = table.unpack(coords + forward * 1.0)
 
-    local bbq1 = `prop_bbq_1`
-    RequestModel(bbq1)
-    while (not HasModelLoaded(bbq1)) do
-        Wait(1)
+        local bbq1 = `prop_bbq_1`
+        RequestModel(bbq1)
+        while (not HasModelLoaded(bbq1)) do
+            Wait(1)
+        end
+        bbqprop1 = CreateObject(bbq1, x, y, z, true, false, true)
+        PlaceObjectOnGroundProperly(bbqprop1)
+        SetEntityAsMissionEntity(bbqprop1)
+
+        TriggerEvent('animations:client:EmoteCommandStart', {"mechanic3"})
+        QBCore.Functions.Progressbar('name_here', 'Placing BBQ...', 5000, false, true, {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = true,
+        }, {}, {}, {}, function()
+            TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+            BBQ1Placed = true
+            BBQ1PickedUp = false
+
+
+            TriggerServerEvent('qb-bbq:server:RemoveBBQ1')
+            TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items['bbq1'], "remove")
+        end)
     end
-     bbqprop1 = CreateObject(bbq1, x, y, z, true, false, true)
-    PlaceObjectOnGroundProperly(bbqprop1)
-    SetEntityAsMissionEntity(bbqprop1)
-
-    TriggerEvent('animations:client:EmoteCommandStart', {"mechanic3"})
-    QBCore.Functions.Progressbar('name_here', 'Placing BBQ...', 5000, false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {}, {}, {}, function()
-        TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-        BBQ1Placed = true
-        BBQ1PickedUp = false
-
-
-        TriggerServerEvent('qb-bbq:server:RemoveBBQ1')
-        TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items['bbq1'], "remove")
-    end)
-end
 end)
 
 RegisterNetEvent('qb-bbq:PickupBBQ1')
@@ -500,7 +580,7 @@ AddEventHandler('qb-bbq:PickupBBQ5', function()
         BBQ5Placed = false
         BBQ5PickedUp = true
         end)
-     end
+    end
 end)
 
 function OpenCookingMenu()
@@ -508,11 +588,18 @@ function OpenCookingMenu()
         {
             header = "Cook",
             isMenuHeader = true,
+        }, 
+        {
+            header = "Fuel",
+            text = " "..FuelLevel.."% Remaining...",
+            args = {
+                Config.EnableFuelSystem == true
+            },
         },
     }
     for k, v in pairs(Config.Recipes) do
         local item = {}
-        item.header = "<img src=nui://"..Config.ImagePath..QBCore.Shared.Items[v.hash].image.." width=35px style='margin-right: 10px'> " .. v.label --possible issue(no issue yet though)
+        item.header = "<img src=nui://"..Config.ImagePath..QBCore.Shared.Items[v.hash].image.." width=35px style='margin-right: 10px'> " .. v.label 
         local text = ""
         for k, v in pairs(v.Ingredients) do
             text = text .. "- " .. v.item .. ": " .. v.amount .. "<br>"
@@ -530,37 +617,113 @@ function OpenCookingMenu()
     exports['qb-menu']:openMenu(columns)
 end
 
-local function CookFood(food, data)
-    IsCookingFood = true
-    QBCore.Functions.Progressbar('cooking_food', 'Cooking '..Config.Recipes[food].label, Config.Recipes[food].CookTime * 1000, false, false, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {
-        animDict = 'amb@prop_human_bbq@male@idle_a',
-        anim = 'idle_b',
-        flags = 8,
-    }, {
-        model = 'prop_fish_slice_01',
-        bone = 28422,
-        coords = { x = -0.005, y = 0.00, z = 0.00 },
-        rotation = { x = 350.0, y = 320.0, z = 0.0 },
-    }, {}, function()
-        QBCore.Functions.Notify("Cooked "..Config.Recipes[food].label, 'success')
-        TriggerServerEvent('qb-bbq:server:CookItem', Config.Recipes[food].hash)
-        for k, v in pairs(Config.Recipes[food].Ingredients) do
-            TriggerServerEvent('qb-bbq:server:RemoveItem', v.item, v.amount)
+RegisterNetEvent('qb-bbq:AddBBQFuel', function()
+    print(FuelLevel)
+    if QBCore.Functions.HasItem(Config.FuelItem) then
+        if FuelLevel == 0 then
+            FuelAmount = 100
         end
-        TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-        ClearPedTasks(PlayerPedId())
-        IsCookingFood = false
-    end, function() -- Cancel
-        ClearPedTasks(PlayerPedId())
-        QBCore.Functions.Notify('You Stopped Cooking', 'error')
-        IsCookingFood = false
-    end)
-end
+        if FuelLevel >= 0 and FuelLevel < 100 then
+            AddingFueling = true
+            print(AddingFueling)
+            QBCore.Functions.Progressbar('fueling_bbq', 'Fueling', Config.FuelingTime*1000, false, false, {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {
+                animDict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+                anim = 'machinic_loop_mechandplayer',
+                flags = 8,
+            }, {}, {}, function()
+                QBCore.Functions.Notify("Added "..FuelAmount.."%", 'success')
+                TriggerServerEvent('qb-bbq:server:RemoveItem', Config.FuelItem, 1)
+                ClearPedTasks(PlayerPedId())
+                AddingFueling = false
+                FuelLevel = FuelLevel + FuelAmount
+                print(FuelLevel)
+            end, function() -- Cancel
+                ClearPedTasks(PlayerPedId())
+                QBCore.Functions.Notify('You Stopped Fueling', 'error')
+                AddingFueling = false
+            end)
+        else
+            QBCore.Functions.Notify('You are already at 100%', 'error', 2000)
+        end
+    else
+        QBCore.Functions.Notify('You Dont have any Fuel to add', 'error', 2000)
+    end
+end)
+
+
+local function CookFood(food, data)
+    if Config.EnableFuelSystem == true then
+        if FuelLevel >= Config.Recipes[food].FuelRequired then
+            IsCookingFood = true
+            QBCore.Functions.Progressbar('cooking_food', 'Cooking '..Config.Recipes[food].label, Config.Recipes[food].CookTime * 1000, false, false, {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {
+                animDict = 'amb@prop_human_bbq@male@idle_a',
+                anim = 'idle_b',
+                flags = 8,
+            }, {
+                model = 'prop_fish_slice_01',
+                bone = 28422,
+                coords = { x = -0.005, y = 0.00, z = 0.00 },
+                rotation = { x = 350.0, y = 320.0, z = 0.0 },
+            }, {}, function()
+                QBCore.Functions.Notify("Cooked "..Config.Recipes[food].label, 'success')
+                TriggerServerEvent('qb-bbq:server:CookItem', Config.Recipes[food].hash)
+                for k, v in pairs(Config.Recipes[food].Ingredients) do
+                    TriggerServerEvent('qb-bbq:server:RemoveItem', v.item, v.amount)
+                end
+                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                ClearPedTasks(PlayerPedId())
+                IsCookingFood = false
+                FuelLevel = FuelLevel-Config.Recipes[food].FuelRequired
+            end, function() -- Cancel
+                ClearPedTasks(PlayerPedId())
+                QBCore.Functions.Notify('You Stopped Cooking', 'error')
+                IsCookingFood = false
+            end)
+        else
+            QBCore.Function.Notify('Not Enough Fuel', 'error', 2000)
+        end
+    else
+        IsCookingFood = true
+            QBCore.Functions.Progressbar('cooking_food', 'Cooking '..Config.Recipes[food].label, Config.Recipes[food].CookTime * 1000, false, false, {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {
+                animDict = 'amb@prop_human_bbq@male@idle_a',
+                anim = 'idle_b',
+                flags = 8,
+            }, {
+                model = 'prop_fish_slice_01',
+                bone = 28422,
+                coords = { x = -0.005, y = 0.00, z = 0.00 },
+                rotation = { x = 350.0, y = 320.0, z = 0.0 },
+            }, {}, function()
+                QBCore.Functions.Notify("Cooked "..Config.Recipes[food].label, 'success')
+                TriggerServerEvent('qb-bbq:server:CookItem', Config.Recipes[food].hash)
+                for k, v in pairs(Config.Recipes[food].Ingredients) do
+                    TriggerServerEvent('qb-bbq:server:RemoveItem', v.item, v.amount)
+                end
+                TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+                ClearPedTasks(PlayerPedId())
+                IsCookingFood = false
+            end, function() 
+                ClearPedTasks(PlayerPedId())
+                QBCore.Functions.Notify('You Stopped Cooking', 'error')
+                IsCookingFood = false
+            end)
+        end
+    end
 
 
 

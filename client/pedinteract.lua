@@ -81,24 +81,26 @@ end)
 
 
 Citizen.CreateThread(function()
-    exports['qb-target']:SpawnPed({
-        model = Config.BuyPed,
-        coords = Config.BuyLocation, 
-        minusOne = true, --may have to change this if your ped is in the ground
-        freeze = true, 
-        invincible = true, 
-        blockevents = true,
-        scenario = 'WORLD_HUMAN_DRUG_DEALER',
-        target = { 
-            options = {
-                {
-                    type="client",
-                    event = "qb-bbq:CheckConvo",
-                    icon = "fas fa-smile",
-                    label = "Greet"
-                }
+    if Config.EnableBBQShop == true then
+        exports['qb-target']:SpawnPed({
+            model = Config.BuyPed,
+            coords = Config.BuyLocation, 
+            minusOne = true, --may have to change this if your ped is in the ground
+            freeze = true, 
+            invincible = true, 
+            blockevents = true,
+            scenario = 'WORLD_HUMAN_DRUG_DEALER',
+            target = { 
+                options = {
+                    {
+                        type="client",
+                        event = "qb-bbq:CheckConvo",
+                        icon = "fas fa-smile",
+                        label = "Greet"
+                    }
+                },
+              distance = 2.5,
             },
-          distance = 2.5,
-        },
-    })
+        })
+    end
 end)
