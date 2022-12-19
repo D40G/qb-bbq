@@ -1,4 +1,5 @@
 Update - 18/12/22 - Now supports custom recipes. editable through config file only
+another update on 18/12/22 - Now has a fuel system toggle in the config ;)
 
 
 Discord - https://discord.gg/3WYz3zaqG5

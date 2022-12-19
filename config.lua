@@ -6,10 +6,21 @@ Config = {
     BBQ3Model = 977744387,
     BBQ4Model = 286252949,
     BBQ5Model = -476379988,
+    EnableStoves = true,
+    -- StoveModels = {
+    --     49373240,
+    --     2513000025,
+    -- },
 
+    EnableFuelSystem = true, --if false then fuel will stay 100% all time
+    FuelItem = 'weapon_petrolcan', --change to whatever you want (uses the whole item to refuel at the moment)
+    FuelingTime = 10,
+    
     JimShops = false, --true if using jim-shops
     ImagePath = "qb-inventory/html/images/", --change if using another inventory
-    EnableConvo = true, --to enable conversation with meat guy /false to go straight to shop
+    EnableBBQShop = true, --enables the meat guy to buy ingredients
+    EnablePropShop = true, --enables the prop shop to buy BBQs
+    EnableConvo = true, --to enable conversation with meat guy /false to go straight to shop (conversation can be edited through pedinteract.lua)
     BuyPed = 'a_m_m_hillbilly_01',
     BuyLocation = vector4(1084.35, 6509.35, 21.04, 134.77),
     PropShopLoc = {  --add as many prop stores as you like
@@ -131,11 +142,12 @@ Config = {
         -- █░░░░░░██░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█░░░░░░░░░░█░░░░░░█████████░░░░░░░░░░░░░░█░░░░░░░░░░░░░░█
         -- ██████████████████████████████████████████████████████████████████████████████████████████████████████████
         
-    ["Recipes"] = {    --add as many food items as you want and configure the cooking times etc. 
+    ["Recipes"] = {    --add as many food items as you want and configure the cooking times, fuel required etc. 
         ["b-burger"] = { --Item Name
             hash = "b-burger", --Item Name
             label = "Cheese Burger", --Item Label shown inside the menu
-            CookTime = 5,  --in seconds 
+            CookTime = 10,  --in seconds 
+            FuelRequired = 5, --% of fuel needed to cook
             Ingredients = {
                 [1] = {
                     item = "b-uc-burger", --Item Name
@@ -145,15 +157,24 @@ Config = {
                     item = "cheese",
                     amount = 1,
                 },
+                [3] = {
+                    item = "bread",
+                    amount = 1,
+                },
             }
         },
         ["b-chicken"] = {
             hash = "b-chicken",
             label = "Chicken Burger",
-            CookTime = 5,
+            CookTime = 10,
+            FuelRequired = 5,
             Ingredients = {
                 [1] = {
                     item = "b-uc-chicken",
+                    amount = 1,
+                },
+                [2] = {
+                    item = "bread",
                     amount = 1,
                 },
             }
@@ -162,9 +183,14 @@ Config = {
             hash = "b-hotdog",
             label = "Hotdog",
             CookTime = 5,
+            FuelRequired = 5,
             Ingredients = {
                 [1] = {
                     item = "b-uc-hotdog",
+                    amount = 1,
+                },
+                [2] = {
+                    item = "bread",
                     amount = 1,
                 },
             }
@@ -172,18 +198,20 @@ Config = {
         ["b-ribs"] = {
             hash = "b-ribs",
             label = "Ribs",
-            CookTime = 5,
+            CookTime = 20,
+            FuelRequired = 5,
             Ingredients = {
                 [1] = {
                     item = "b-uc-ribs",
-                    amount = 100,
+                    amount = 1,
                 },
             }
         },
         ["b-brisket"] = {
             hash = "b-brisket",
             label = "Brisket",
-            CookTime = 5,
+            CookTime = 20,
+            FuelRequired = 5,
             Ingredients = {
                 [1] = {
                     item = "b-uc-brisket",
@@ -194,10 +222,27 @@ Config = {
         ["b-jacket"] = {
             hash = "b-jacket",
             label = "Jacket Potato",
-            CookTime = 5,
+            CookTime = 10,
+            FuelRequired = 5,
             Ingredients = {
                 [1] = {
                     item = "b-uc-jacket",
+                    amount = 1,
+                },
+            }
+        },
+        ["tosti"] = {
+            hash = "tosti",
+            label = "Grilled Cheese Sandwich",
+            CookTime = 5,
+            FuelRequired = 5,
+            Ingredients = {
+                [1] = {
+                    item = "bread",
+                    amount = 1,
+                },
+                [2] = {
+                    item = "cheese",
                     amount = 1,
                 },
             }

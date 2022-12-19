@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'oosayeroo' 
 description 'qb-bbq by oosayeroo'
-version '2.0.0'
+version '2.2.0'
 
 shared_scripts {
     'config.lua'
@@ -11,7 +11,7 @@ shared_scripts {
 
 client_scripts {
 	'client/main.lua',
-	'client/pedinteraction.lua'
+	'client/pedinteract.lua'
 }
 
 server_scripts {
